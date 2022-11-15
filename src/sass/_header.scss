@@ -1,0 +1,23 @@
+header {
+  //   margin: 0 auto;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+.search-form input {
+  color: black;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+.search-form button {
+  margin-left: 10px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: darkgreen;
+  color: red;
+}
