@@ -60,7 +60,7 @@ async function loadFromAPI(name, page) {
   try {
     const response = await axios.get(BASE_URL, options);
     alreadyShown += response.data.hits.length;
-    console.log('🚀 ~ alreadyShown', alreadyShown);
+
     message(
       response.data.hits.length,
       alreadyShown,
@@ -75,8 +75,8 @@ async function loadFromAPI(name, page) {
 }
 function renderGallery(picture) {
   const markup = picture.hits
-    .map(hit => {
-      return `<a class="gallery__link" href="${hit.largeImageURL}">
+    .map(
+      hit => `<a class="gallery__link" href="${hit.largeImageURL}">
         <div class="photo-card">
     <img src="${hit.webformatURL}" alt="${hit.tags}" loading="lazy" />
     <div class="info">
@@ -98,8 +98,8 @@ function renderGallery(picture) {
       </p>
     </div>
   </div>
-  </a>`;
-    })
+  </a>`
+    )
     .join('');
   refs.gallery.insertAdjacentHTML('beforeend', markup);
   simpleLightBox.refresh();
@@ -111,16 +111,16 @@ const simpleLightBox = new SimpleLightbox('.gallery a', {
 });
 function message(length, alreadyShown, per_page, total) {
   if (!length) {
-    return Notify.failure(
+    Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
   }
-  if (alreadyShown === per_page) {
-    Notify.info(`Hooray! We found ${total} images.`);
+  if (length >= alreadyShown) {
     refs.loadMore.style.display = 'flex';
+    Notify.info(`Hooray! We found ${total} images.`);
   }
-  if (alreadyShown > total) {
-    Notify.info("We're sorry, but you've reached the end of search results.");
+  if (alreadyShown >= total) {
     refs.loadMore.style.display = 'none';
+    Notify.info("We're sorry, but you've reached the end of search results.");
   }
 }
